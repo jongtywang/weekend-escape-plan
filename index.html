@@ -114,6 +114,7 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid 
 
 /* ---------- phone ---------- */
 .app{
+  position:relative;
   width:100%;background:var(--surface);
   border:1px solid var(--line);border-radius:34px;
   box-shadow:var(--shadow);overflow:clip;
@@ -209,6 +210,7 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid 
   border-radius:99px;padding:2px 10px;
 }
 .c-top{display:flex;gap:12px;align-items:flex-start}
+.c-top[role="button"]{cursor:pointer}
 .c-emoji{
   flex:none;width:52px;height:52px;border-radius:14px;
   display:grid;place-items:center;font-size:26px;
@@ -222,7 +224,8 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid 
   background:var(--brand-soft);border-radius:99px;padding:2px 9px;
 }
 .c-meta{margin:3px 0 0;font-size:12.5px;color:var(--ink-2)}
-.c-reason{margin:4px 0 0;font-size:12.5px;color:var(--brand);font-weight:500}
+.c-reason{margin:4px 0 0;font-size:12.5px;color:var(--brand);font-weight:500;display:flex;gap:8px;align-items:baseline}
+.c-reason .more{margin-left:auto;color:var(--ink-3);font-weight:400;font-size:11.5px;flex:none}
 .c-bad{color:var(--live)}
 .c-foot{display:flex;align-items:center;gap:8px;margin-top:11px}
 .tag{font-size:11.5px;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);border-radius:99px;padding:2.5px 9px}
@@ -328,6 +331,43 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid 
 .like{font-size:12px;color:var(--ink-2);border:1px solid var(--line);border-radius:99px;padding:3.5px 11px;transition:all .15s}
 .like.on{color:var(--live);border-color:var(--live);background:var(--live-soft)}
 
+/* ---------- sheet (score / detail) ---------- */
+.sheet-wrap{position:absolute;inset:0;z-index:40;display:flex;align-items:flex-end;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s}
+.sheet-wrap.show{opacity:1;visibility:visible}
+.sheet-scrim{position:absolute;inset:0;background:rgba(10,20,14,.42)}
+.sheet{position:relative;width:100%;max-height:76%;overflow-y:auto;background:var(--surface);border-radius:24px 24px 0 0;border-top:1px solid var(--line);padding:16px 18px 22px;transform:translateY(14px);transition:transform .2s}
+.sheet-wrap.show .sheet{transform:translateY(0)}
+.sh-x{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);font-size:13px;line-height:1}
+.sh-t{margin:0 34px 0 0;font-size:16.5px;line-height:1.4}
+.sh-s{margin:3px 0 12px;font-size:12.5px;color:var(--ink-2)}
+.sh-f{margin:12px 0 0;font-size:11.5px;color:var(--ink-3)}
+.w-row{display:grid;grid-template-columns:minmax(0,1fr) 64px 42px;gap:10px;align-items:center;padding:8px 0;border-top:1px dashed var(--line)}
+.w-lb{font-size:13px}
+.w-bar{height:6px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
+.w-bar i{display:block;height:100%;background:var(--brand);border-radius:99px}
+.w-val{text-align:right;font-weight:700;font-size:13px}
+.w-val.pos{color:var(--brand)}
+.w-val.neg{color:var(--live)}
+.d-reason{font-size:12.5px;color:var(--brand);font-weight:500;margin:2px 0 10px}
+.d-meta{display:grid;grid-template-columns:1fr 1fr;gap:5px 12px;margin:0 0 10px}
+.d-meta .m{font-size:12.5px;color:var(--ink-3)}
+.d-meta .m b{color:var(--ink);font-weight:500}
+.d-note{margin:0 0 12px;padding:10px 12px;background:var(--amber-soft);border-radius:12px;font-size:13px;color:var(--ink-2)}
+.d-acts{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- plan strip ---------- */
+.plan{margin-top:14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:12px 14px}
+.plan .ph{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.plan .ph .t{font-size:14px}
+.plan .ph .c{font-size:11.5px;color:var(--ink-3)}
+.plan .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.p-col .pd{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--ink-2);padding-bottom:4px}
+.p-item{display:flex;align-items:center;gap:6px;font-size:12.5px;padding:5px 0;border-top:1px dashed var(--line)}
+.p-item .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.p-item .rm{flex:none;color:var(--ink-3);font-size:12px;padding:2px 5px}
+.p-empty{font-size:12px;color:var(--ink-3);padding:6px 0}
+.plan .warn{margin-top:10px;font-size:11.5px;color:var(--amber);font-weight:500}
+
 /* toast */
 .toast{
   position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(8px);
@@ -366,10 +406,10 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid 
     </div>
 
     <div class="try">
-      <b>▶ 试一试（右侧手机内）：</b>先在顶部把周六切成周日，看推荐如何「避雨」；再调预算到 ¥0–50，观察超预算活动的匹配分与理由变化；然后在任意活动里发起组队或打卡，去底部「打卡」页查看徽章。攻略页可以直接发布你的第一篇。
+      <b>▶ 试一试（右侧手机内）：</b>点任意卡片的<b>匹配分</b>，看权重如何拆解（偏好 / 天气 / 预算 / 人数）；点<b>卡片本体</b>看详情，把活动加入周六 / 周日计划单；把周六切成周日，看推荐如何「避雨」；「组队」页可一键复制邀请文案发微信；打卡、发攻略都能积累徽章。
       <br><br>本雏形为纯前端示例数据，所有交互真实可用，数据保存在你的浏览器本地。
     </div>
-    <p class="ver">v0.2 雏形 · 48h 内持续迭代</p>
+    <p class="ver">v0.3 雏形 · 48h 内持续迭代</p>
   </aside>
 
   <!-- ============ phone ============ -->
@@ -387,6 +427,8 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid 
         <div class="h-sec"><span class="t disp">这周末天气</span><span class="c">点击切换，推荐会跟着变</span></div>
         <div class="weather" id="weather"></div>
         <p class="wtip" id="wtip"></p>
+
+        <div class="plan" id="planStrip" hidden></div>
 
         <div class="panel">
           <p class="p-title">我的周末偏好</p>
@@ -449,6 +491,14 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid 
       <button data-action="tab" data-tab="log"><span class="ic">📍</span>打卡</button>
       <button data-action="tab" data-tab="guide"><span class="ic">📖</span>攻略</button>
     </nav>
+
+    <div class="sheet-wrap" id="sheetWrap" aria-hidden="true">
+      <div class="sheet-scrim" data-action="sheet-close"></div>
+      <div class="sheet" id="sheetBody" role="dialog" aria-modal="true" aria-label="详情面板">
+        <button class="sh-x" data-action="sheet-close" aria-label="关闭">✕</button>
+        <div id="sheetContent"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -501,12 +551,15 @@ var SEED_CHECKINS = [
 var KEY = "weekend-escape-v2";
 var state = {
   prefs:{types:["展览","市集","徒步","骑行","咖啡"], budget:"0-50", people:2, day:"sat"},
-  joined:{}, checkins:[], myPosts:[], likes:{}
+  joined:{}, checkins:[], myPosts:[], likes:{}, plan:{sat:[], sun:[]}
 };
 try{
   var saved = JSON.parse(localStorage.getItem(KEY) || "null");
   if(saved && saved.prefs){ state = saved; }
 }catch(e){ /* private mode etc. */ }
+if(!state.plan){ state.plan = {sat:[], sun:[]}; }
+if(!state.plan.sat){ state.plan.sat = []; }
+if(!state.plan.sun){ state.plan.sun = []; }
 function save(){
   try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
 }
@@ -544,18 +597,19 @@ function fitScore(act, dayKey){
 }
 function scoreOf(act){
   var p = state.prefs, w = WEATHER[p.day], s = 40, reasons = [];
-  if(p.types.indexOf(act.type) >= 0){ s += 26; reasons.push("匹配「" + act.type + "」偏好"); }
+  var parts = [{label:"基础分", delta:40}];
+  if(p.types.indexOf(act.type) >= 0){ s += 26; reasons.push("匹配「" + act.type + "」偏好"); parts.push({label:"匹配「" + act.type + "」偏好", delta:26}); }
   var f = fitScore(act, p.day);
-  if(f === 1){ s += 22; reasons.push(w.kind === "sunny" ? "晴天 · 户外首选" : "有雨 · 室内安心"); }
-  if(f === -1){ s -= 30; reasons.push(w.kind === "sunny" ? "晴天别浪费在室内" : "周日有雨 · 户外不建议"); }
+  if(f === 1){ s += 22; reasons.push(w.kind === "sunny" ? "晴天 · 户外首选" : "有雨 · 室内安心"); parts.push({label: w.kind === "sunny" ? "晴天 · 户外正当时" : "有雨 · 室内正合适", delta:22}); }
+  if(f === -1){ s -= 30; reasons.push(w.kind === "sunny" ? "晴天别浪费在室内" : "周日有雨 · 户外不建议"); parts.push({label: w.kind === "sunny" ? "晴天 · 户外更值得" : "周日有雨 · 户外有风险", delta:-30}); }
   if(p.budget !== "any"){
     var max = p.budget === "0-50" ? 50 : (p.budget === "50-150" ? 150 : 1000);
-    if(act.price <= max){ s += 14; reasons.push(act.price === 0 ? "0 元出发" : "¥" + act.price + " 在预算内"); }
-    else { s -= 30; reasons.push("超预算 ¥" + act.price); }
+    if(act.price <= max){ s += 14; reasons.push(act.price === 0 ? "0 元出发" : "¥" + act.price + " 在预算内"); parts.push({label: act.price === 0 ? "0 元出发" : "¥" + act.price + " 在预算内", delta:14}); }
+    else { s -= 30; reasons.push("超预算 ¥" + act.price); parts.push({label:"超预算 ¥" + act.price, delta:-30}); }
   }
-  if(act.group && p.people >= 3){ s += 6; reasons.push("适合小队同行"); }
+  if(act.group && p.people >= 3){ s += 6; reasons.push("适合小队同行"); parts.push({label:"适合 " + p.people + " 人小队同行", delta:6}); }
   if(!reasons.length){ reasons.push("综合不错的备选"); }
-  return { score: Math.max(6, Math.min(99, s)), reason: reasons.slice(0,2).join(" · ") };
+  return { score: Math.max(6, Math.min(99, s)), reason: reasons.slice(0,2).join(" · "), parts: parts };
 }
 function squadCountFor(actId){
   var n = 0;
@@ -585,12 +639,12 @@ function renderRecs(){
     var teamN = squadCountFor(a.id);
     return "<article class='card" + (i === 0 ? " first" : "") + "'>" +
       (i === 0 ? "<span class='topflag'>本周最匹配</span>" : "") +
-      "<div class='c-top'>" +
+      "<div class='c-top' role='button' tabindex='0' data-action='detail' data-id='" + a.id + "' aria-label='查看 " + esc(a.name) + " 详情'>" +
         "<span class='c-emoji'>" + a.emoji + "</span>" +
         "<div class='c-main'>" +
-          "<div class='c-title'><h3>" + esc(a.name) + "</h3><span class='score num'>" + a.score + " 匹配</span></div>" +
+          "<div class='c-title'><h3>" + esc(a.name) + "</h3><button class='score num' data-action='why' data-id='" + a.id + "' title='看看这个匹配分怎么算的'>" + a.score + " 匹配 ⓘ</button></div>" +
           "<p class='c-meta num'>¥" + a.price + (a.price === 0 ? "（免费）" : "") + " · " + a.hours + " · " + esc(a.area) + " · " + esc(a.metro) + "</p>" +
-          "<p class='c-reason'>" + a.reason + "</p>" +
+          "<p class='c-reason" + (a.reason.indexOf("超预算") >= 0 || a.reason.indexOf("不建议") >= 0 ? " c-bad" : "") + "'><span>" + a.reason + "</span><span class='more' aria-hidden='true'>详情 ›</span></p>" +
         "</div>" +
       "</div>" +
       "<div class='c-foot'>" +
@@ -658,6 +712,7 @@ function renderSquads(){
       "<div class='s-foot'>" +
         "<span class='cnt num'>" + n + " / " + q.cap + " 人</span>" +
         "<span class='sp'></span>" +
+        "<button class='btn' data-action='invite' data-id='" + q.id + "'>📋 邀请</button>" +
         (mine
           ? "<button class='btn' data-action='quit' data-id='" + q.id + "'>退出小队</button>"
           : (full
@@ -683,6 +738,97 @@ function joinAct(actId){
     toast("已发起组队 · " + WEATHER[state.prefs.day].name + " 10:00 " + a.metro + " 集合");
   }
   save(); renderRecs(); renderSquads();
+}
+
+/* ================= plan & sheet ================= */
+function renderPlan(){
+  var host = $("planStrip");
+  var n = state.plan.sat.length + state.plan.sun.length;
+  if(!n){ host.hidden = true; host.innerHTML = ""; return; }
+  host.hidden = false;
+  function col(day){
+    var w = WEATHER[day], ids = state.plan[day], sum = 0;
+    var items = ids.map(function(id){
+      var a = actById(id);
+      sum += a.price;
+      return "<div class='p-item'><span>" + a.emoji + "</span><span class='nm'>" + esc(a.name) + "</span><button class='rm' data-action='plan-rm' data-id='" + id + "' data-day='" + day + "' aria-label='从计划移除'>✕</button></div>";
+    }).join("");
+    return "<div class='p-col'><div class='pd num'><span>" + w.name + " · " + ids.length + " 项</span><span>约 ¥" + sum + "/人</span></div>" + (items || "<div class='p-empty'>还没安排，点推荐卡添加</div>") + "</div>";
+  }
+  var warn = WEATHER.sun.kind === "rainy" && state.plan.sun.some(function(id){ return actById(id).fit === "out"; });
+  host.innerHTML =
+    "<div class='ph'><span class='t disp'>我的周末计划</span><span class='c'>点推荐卡可继续添加</span></div>" +
+    "<div class='cols'>" + col("sat") + col("sun") + "</div>" +
+    (warn ? "<div class='warn'>⚠️ 周日有小雨，计划里的户外活动建议留个室内备选</div>" : "");
+}
+function openSheet(html){
+  $("sheetContent").innerHTML = html;
+  $("sheetWrap").classList.add("show");
+  $("sheetWrap").setAttribute("aria-hidden", "false");
+}
+function closeSheet(){
+  $("sheetWrap").classList.remove("show");
+  $("sheetWrap").setAttribute("aria-hidden", "true");
+}
+function openWhy(id){
+  var a = actById(id), r = scoreOf(a), max = 40;
+  r.parts.forEach(function(p){ max = Math.max(max, Math.abs(p.delta)); });
+  var rows = r.parts.map(function(p){
+    return "<div class='w-row'><span class='w-lb'>" + p.label + "</span><span class='w-bar'><i style='width:" + Math.max(8, Math.round(Math.abs(p.delta) / max * 100)) + "%'></i></span><span class='w-val num " + (p.delta < 0 ? "neg" : "pos") + "'>" + (p.delta > 0 ? "+" : "") + p.delta + "</span></div>";
+  }).join("");
+  openSheet(
+    "<h3 class='sh-t'>" + a.emoji + " 匹配分 <span class='num'>" + r.score + "</span></h3>" +
+    "<p class='sh-s'>" + esc(a.name) + "</p>" + rows +
+    "<p class='sh-f'>匹配分 = 偏好 × 当日天气 × 预算 × 同行人数，实时计算；切换顶部周六 / 周日或调整偏好，能看到排序变化。</p>"
+  );
+}
+function openDetail(id){
+  var a = actById(id), r = scoreOf(a);
+  function pbtn(day){
+    var on = state.plan[day].indexOf(id) >= 0;
+    return "<button class='btn" + (on ? " on" : " pri") + "' data-action='plan-tg' data-id='" + id + "' data-day='" + day + "'>" + (on ? "✓ 已在" : "📅 加入") + WEATHER[day].name + "</button>";
+  }
+  openSheet(
+    "<h3 class='sh-t'>" + a.emoji + " " + esc(a.name) + "</h3>" +
+    "<p class='d-reason'>" + r.reason + " · 匹配分 " + r.score + "</p>" +
+    "<div class='d-meta num'>" +
+      "<span class='m'>门票 <b>" + (a.price === 0 ? "免费" : "¥" + a.price) + "</b></span>" +
+      "<span class='m'>时长 <b>" + a.hours + "</b></span>" +
+      "<span class='m'>区域 <b>" + esc(a.area) + "</b></span>" +
+      "<span class='m'>到达 <b>" + esc(a.metro) + "</b></span>" +
+    "</div>" +
+    "<div class='d-note'>💡 " + esc(a.note) + "</div>" +
+    "<div class='d-acts'>" + pbtn("sat") + pbtn("sun") +
+      "<button class='btn' data-action='act-join' data-id='" + a.id + "'>🧑‍🤝‍🧑 组队</button>" +
+      "<button class='btn pri' data-action='act-check' data-id='" + a.id + "'>📍 打卡</button>" +
+    "</div>"
+  );
+}
+function togglePlan(id, day, reopen){
+  var arr = state.plan[day], i = arr.indexOf(id), a = actById(id);
+  if(i >= 0){
+    arr.splice(i, 1);
+    toast("已从" + WEATHER[day].name + "计划移除");
+  }else{
+    arr.push(id);
+    var warn = (day === "sun" && a.fit === "out") ? "（周日有雨，记得留个备选 ☔）" : "";
+    toast("已加入" + WEATHER[day].name + "计划" + warn);
+  }
+  save(); renderPlan();
+  if(reopen){ openDetail(id); }
+}
+function copyText(t, msg){
+  function done(){ toast(msg || "已复制 📋"); }
+  function fallback(){
+    var ta = document.createElement("textarea");
+    ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); }catch(e){}
+    document.body.removeChild(ta); done();
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(done, fallback);
+  }else{ fallback(); }
 }
 
 /* ================= checkin ================= */
@@ -793,8 +939,24 @@ document.addEventListener("click", function(ev){
   else if(act === "budget"){ state.prefs.budget = el.dataset.b; save(); renderPrefs(); renderRecs(); }
   else if(act === "people-minus"){ if(state.prefs.people > 1){ state.prefs.people--; save(); renderPrefs(); renderRecs(); } }
   else if(act === "people-plus"){ if(state.prefs.people < 9){ state.prefs.people++; save(); renderPrefs(); renderRecs(); } }
-  else if(act === "act-join"){ joinAct(el.dataset.id); }
-  else if(act === "act-check"){ checkin(el.dataset.id); }
+  else if(act === "act-join"){ joinAct(el.dataset.id); if(el.closest("#sheetBody")) closeSheet(); }
+  else if(act === "act-check"){ checkin(el.dataset.id); if(el.closest("#sheetBody")) closeSheet(); }
+  else if(act === "why"){ openWhy(el.dataset.id); }
+  else if(act === "detail"){ openDetail(el.dataset.id); }
+  else if(act === "sheet-close"){ closeSheet(); }
+  else if(act === "plan-tg"){ togglePlan(el.dataset.id, el.dataset.day, true); }
+  else if(act === "plan-rm"){ togglePlan(el.dataset.id, el.dataset.day, false); }
+  else if(act === "invite"){
+    var qd = null;
+    squads.forEach(function(q){ if(q.id === el.dataset.id) qd = q; });
+    if(qd){
+      var qa = actById(qd.actId);
+      copyText(
+        "【周末出逃计划】约你一起出发 🧭\n" + qa.emoji + " " + qa.name + "\n🕐 " + qd.day + " " + qd.time + " 集合\n📍 " + qd.spot + "\n👥 已有 " + qd.members.length + "/" + qd.cap + " 人，就差你啦\n加入小队 → https://jongtywang.github.io/weekend-escape-plan/",
+        "邀请文案已复制 📋 去微信粘贴发给朋友吧"
+      );
+    }
+  }
   else if(act === "join"){
     squads.forEach(function(q){
       if(q.id === el.dataset.id && q.members.length < q.cap && q.members.indexOf("我") < 0) q.members.push("我");
@@ -823,6 +985,14 @@ document.addEventListener("click", function(ev){
   else if(act === "publish"){ publish(); }
 });
 
+document.addEventListener("keydown", function(ev){
+  if(ev.key === "Escape"){ closeSheet(); }
+  else if((ev.key === "Enter" || ev.key === " ") && ev.target && ev.target.matches && ev.target.matches("[role='button'][data-action]")){
+    ev.preventDefault();
+    ev.target.click();
+  }
+});
+
 /* ================= boot ================= */
-renderWeather(); renderPrefs(); renderRecs(); renderSquads(); renderCheckins(); renderPosts();
+renderWeather(); renderPrefs(); renderRecs(); renderSquads(); renderCheckins(); renderPosts(); renderPlan();
 </script>
