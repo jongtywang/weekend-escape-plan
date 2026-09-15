@@ -1,0 +1,826 @@
+<title>周末出逃计划</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#F0F4EC;
+  --surface:#FFFFFF;
+  --surface-2:#F5F8F1;
+  --ink:#1E2A23;
+  --ink-2:#54635A;
+  --ink-3:#8C988F;
+  --line:#DFE6DB;
+  --brand:#2E6B4E;
+  --brand-ink:#FFFFFF;
+  --brand-soft:#E3EFE7;
+  --amber:#E8930C;
+  --amber-soft:#FBEFD9;
+  --live:#D9583F;
+  --live-soft:#F9E4DE;
+  --sky:#3E7DC2;
+  --sky-soft:#E1EDF9;
+  --shadow:0 24px 60px -32px rgba(23,43,33,.45);
+  --radius:18px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121A14;
+    --surface:#1B241E;
+    --surface-2:#212C25;
+    --ink:#E7EEE8;
+    --ink-2:#A9B7AD;
+    --ink-3:#75827A;
+    --line:#2C3830;
+    --brand:#6FBF93;
+    --brand-ink:#0F1712;
+    --brand-soft:#24352C;
+    --amber:#F2A93B;
+    --amber-soft:#3A2E17;
+    --live:#E8785F;
+    --live-soft:#3B241E;
+    --sky:#7FB3E8;
+    --sky-soft:#1E2C3B;
+    --shadow:0 24px 60px -28px rgba(0,0,0,.65);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121A14;
+  --surface:#1B241E;
+  --surface-2:#212C25;
+  --ink:#E7EEE8;
+  --ink-2:#A9B7AD;
+  --ink-3:#75827A;
+  --line:#2C3830;
+  --brand:#6FBF93;
+  --brand-ink:#0F1712;
+  --brand-soft:#24352C;
+  --amber:#F2A93B;
+  --amber-soft:#3A2E17;
+  --live:#E8785F;
+  --live-soft:#3B241E;
+  --sky:#7FB3E8;
+  --sky-soft:#1E2C3B;
+  --shadow:0 24px 60px -28px rgba(0,0,0,.65);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:15px;
+  line-height:1.65;
+}
+.disp{font-family:"ZCOOL QingKe HuangYou","Noto Sans SC","PingFang SC",sans-serif;font-weight:400;letter-spacing:.02em}
+button{font:inherit;color:inherit;cursor:pointer;border:none;background:none;padding:0}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--amber);outline-offset:2px;border-radius:6px}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- page frame ---------- */
+.page{
+  max-width:1120px;margin:0 auto;
+  padding:34px 20px 70px;
+  display:grid;grid-template-columns:330px minmax(0,432px);
+  gap:44px;justify-content:center;align-items:start;
+}
+.notes{position:sticky;top:26px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;letter-spacing:.14em;color:var(--brand);
+  font-weight:700;text-transform:uppercase;
+}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--brand);border-radius:2px}
+.notes h1{font-size:44px;line-height:1.15;margin:14px 0 6px}
+.notes .sub{color:var(--ink-2);font-size:14.5px;margin:0 0 26px}
+.pain{border-top:1px solid var(--line);padding:15px 0;display:grid;gap:4px}
+.pain:last-of-type{border-bottom:1px solid var(--line)}
+.pain .from{color:var(--ink-3);font-size:13.5px;text-decoration:line-through;text-decoration-color:var(--live)}
+.pain .to{font-weight:500}
+.pain .to b{color:var(--brand)}
+.notes .try{
+  margin-top:24px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:16px 18px;font-size:13.5px;color:var(--ink-2);
+}
+.notes .try b{color:var(--ink)}
+.notes .ver{margin-top:16px;font-size:12px;color:var(--ink-3)}
+@media (max-width:940px){
+  .page{grid-template-columns:minmax(0,432px);padding:18px 14px 60px;gap:26px}
+  .notes{position:static;order:2}
+  .app{order:1}
+  .notes h1{font-size:34px}
+}
+
+/* ---------- phone ---------- */
+.app{
+  width:100%;background:var(--surface);
+  border:1px solid var(--line);border-radius:34px;
+  box-shadow:var(--shadow);overflow:clip;
+}
+@media (max-width:520px){
+  .page{padding:0 0 50px}
+  .app{border:none;border-radius:0;box-shadow:none;max-width:none}
+}
+.appbar{
+  position:sticky;top:0;z-index:20;
+  display:flex;align-items:center;gap:10px;
+  padding:16px 20px 12px;
+  background:color-mix(in srgb,var(--surface) 88%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.appbar .logo{font-size:22px;line-height:1}
+.appbar .name{font-size:19px}
+.appbar .city{margin-left:auto;font-size:12px;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);border-radius:99px;padding:3px 10px}
+.screen{padding:16px 18px 26px;min-height:560px}
+
+/* tabs */
+.tabbar{
+  position:sticky;bottom:12px;z-index:20;
+  margin:6px 14px 14px;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  background:color-mix(in srgb,var(--surface) 92%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:20px;
+  box-shadow:0 12px 30px -14px rgba(23,43,33,.4);
+  padding:6px;
+}
+.tabbar button{
+  display:grid;justify-items:center;gap:1px;
+  padding:7px 2px;border-radius:14px;
+  font-size:11.5px;color:var(--ink-2);transition:background .15s,color .15s;
+}
+.tabbar button .ic{font-size:19px;line-height:1;filter:grayscale(.4);transition:filter .15s}
+.tabbar button[aria-current="page"]{background:var(--brand-soft);color:var(--brand);font-weight:700}
+.tabbar button[aria-current="page"] .ic{filter:none}
+
+/* ---------- recommend ---------- */
+.h-sec{display:flex;align-items:baseline;gap:8px;margin:2px 0 10px}
+.h-sec .t{font-size:17px}
+.h-sec .c{font-size:12px;color:var(--ink-3)}
+.weather{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.wcard{
+  text-align:left;border:1.5px solid var(--line);border-radius:var(--radius);
+  padding:12px 14px;background:var(--surface-2);
+  display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:center;
+  transition:border-color .15s,transform .15s;
+}
+.wcard:hover{transform:translateY(-1px)}
+.wcard .we{grid-row:1/3;font-size:30px;line-height:1}
+.wcard .wd{font-weight:700;font-size:14px}
+.wcard .wt{font-size:12.5px;color:var(--ink-2)}
+.wcard .wf{grid-column:2;font-size:11.5px;color:var(--brand);font-weight:500}
+.wcard[aria-pressed="true"]{border-color:var(--brand);background:var(--brand-soft)}
+.wcard[aria-pressed="true"] .wf{color:var(--brand)}
+.wtip{margin:10px 2px 0;font-size:12.5px;color:var(--ink-2);display:flex;gap:6px;align-items:flex-start}
+.wtip .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);margin-top:7px;flex:none}
+
+.panel{border:1px solid var(--line);border-radius:var(--radius);padding:14px 15px;margin-top:14px;background:var(--surface)}
+.p-title{font-size:13px;font-weight:700;letter-spacing:.05em;color:var(--ink-2);margin:0 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  border:1px solid var(--line);border-radius:99px;padding:5px 13px;
+  font-size:13px;color:var(--ink-2);background:var(--surface);
+  transition:all .15s;
+}
+.chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--brand-ink);font-weight:500}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:4px}
+.seg button{border-radius:9px;padding:5px 2px;font-size:12.5px;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);font-weight:700;box-shadow:0 2px 8px -4px rgba(23,43,33,.35)}
+.p-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+.p-row .lb{font-size:13px;font-weight:700;color:var(--ink-2)}
+.p-row .lb small{font-weight:400;color:var(--ink-3);margin-left:4px}
+.stepper{display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:99px;padding:2px}
+.stepper button{width:28px;height:28px;border-radius:50%;font-size:15px;background:var(--surface-2);color:var(--ink-2);line-height:1}
+.stepper .val{min-width:52px;text-align:center;font-weight:700;font-size:13.5px}
+
+.recs{margin-top:18px;display:grid;gap:12px}
+.card{
+  position:relative;border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 15px;background:var(--surface);
+  transition:transform .15s,box-shadow .15s;
+}
+.card:hover{transform:translateY(-2px);box-shadow:0 14px 30px -18px rgba(23,43,33,.4)}
+.card.first{border-color:var(--amber)}
+.topflag{
+  position:absolute;top:-9px;right:12px;background:var(--amber);color:#fff;
+  font-size:11px;font-weight:700;letter-spacing:.08em;
+  border-radius:99px;padding:2px 10px;
+}
+.c-top{display:flex;gap:12px;align-items:flex-start}
+.c-emoji{
+  flex:none;width:52px;height:52px;border-radius:14px;
+  display:grid;place-items:center;font-size:26px;
+  background:var(--surface-2);border:1px solid var(--line);
+}
+.c-main{flex:1;min-width:0}
+.c-title{display:flex;align-items:center;gap:8px;margin:0}
+.c-title h3{font-size:15.5px;margin:0;flex:1;min-width:0}
+.score{
+  flex:none;font-size:12px;font-weight:700;color:var(--brand);
+  background:var(--brand-soft);border-radius:99px;padding:2px 9px;
+}
+.c-meta{margin:3px 0 0;font-size:12.5px;color:var(--ink-2)}
+.c-reason{margin:4px 0 0;font-size:12.5px;color:var(--brand);font-weight:500}
+.c-bad{color:var(--live)}
+.c-foot{display:flex;align-items:center;gap:8px;margin-top:11px}
+.tag{font-size:11.5px;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);border-radius:99px;padding:2.5px 9px}
+.tag.w-out{color:var(--amber);background:var(--amber-soft);border-color:transparent}
+.tag.w-in{color:var(--sky);background:var(--sky-soft);border-color:transparent}
+.c-foot .sp{flex:1}
+.btn{
+  border-radius:99px;padding:5.5px 13px;font-size:12.5px;font-weight:500;
+  border:1px solid var(--line);color:var(--ink-2);background:var(--surface);
+  transition:all .15s;
+}
+.btn:hover{border-color:var(--ink-3)}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.btn.pri:hover{filter:brightness(1.06)}
+.btn.on{background:var(--brand-soft);border-color:var(--brand);color:var(--brand)}
+.empty{
+  border:1.5px dashed var(--line);border-radius:var(--radius);
+  padding:26px 18px;text-align:center;color:var(--ink-3);font-size:13.5px;
+}
+
+/* ---------- squads ---------- */
+.squad{border:1px solid var(--line);border-radius:var(--radius);padding:14px 15px;background:var(--surface);display:grid;gap:10px}
+.squad.full{opacity:.72}
+.s-head{display:flex;align-items:center;gap:8px}
+.s-head .se{font-size:20px}
+.s-head h3{margin:0;font-size:15px;flex:1}
+.s-pill{font-size:11.5px;font-weight:700;border-radius:99px;padding:2px 9px}
+.s-pill.open{color:var(--brand);background:var(--brand-soft)}
+.s-pill.full{color:var(--live);background:var(--live-soft)}
+.s-meta{font-size:12.5px;color:var(--ink-2);display:grid;gap:3px}
+.s-meta .m{display:flex;gap:6px}
+.s-meta .m::before{content:"·";color:var(--ink-3)}
+.mems{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.mem{
+  width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+  font-size:15px;background:var(--surface-2);border:1px solid var(--line);
+}
+.mem.me{background:var(--brand);border-color:var(--brand)}
+.mem.more{font-size:11px;color:var(--ink-3);font-weight:700}
+.s-bar{height:5px;border-radius:99px;background:var(--surface-2);overflow:hidden;border:1px solid var(--line)}
+.s-bar i{display:block;height:100%;background:var(--brand);border-radius:99px;transition:width .3s}
+.s-foot{display:flex;align-items:center;gap:8px}
+.s-foot .cnt{font-size:12px;color:var(--ink-2);font-weight:700}
+.s-foot .sp{flex:1}
+
+/* ---------- checkin ---------- */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{border:1px solid var(--line);border-radius:var(--radius);padding:12px 8px;text-align:center;background:var(--surface-2)}
+.stat .v{font-size:24px;line-height:1.2}
+.stat .v small{font-size:13px;color:var(--ink-3);font-weight:400}
+.stat .k{font-size:11.5px;color:var(--ink-2);margin-top:2px}
+.tl{margin-top:14px;display:grid;gap:0;position:relative}
+.tl-item{
+  display:grid;grid-template-columns:26px 1fr;gap:12px;
+  padding:11px 2px;position:relative;
+}
+.tl-item::before{
+  content:"";position:absolute;left:12.5px;top:0;bottom:0;
+  border-left:2px dashed var(--line);
+}
+.tl-item:first-child::before{top:14px}
+.tl-item:last-child::before{bottom:calc(100% - 14px)}
+.tl-dot{
+  width:26px;height:26px;border-radius:50%;z-index:1;
+  display:grid;place-items:center;font-size:13px;
+  background:var(--surface);border:2px solid var(--brand);
+}
+.tl-body{border:1px solid var(--line);border-radius:14px;padding:10px 13px;background:var(--surface)}
+.tl-body .n{font-weight:700;font-size:14px}
+.tl-body .d{font-size:12px;color:var(--ink-3);margin-top:2px}
+.badges{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.badge{
+  border:1px solid var(--line);border-radius:14px;padding:10px 4px 8px;
+  text-align:center;background:var(--surface-2);
+}
+.badge .bi{font-size:22px;line-height:1.2}
+.badge .bn{font-size:11px;font-weight:700;margin-top:2px}
+.badge .bc{font-size:10px;color:var(--ink-3);line-height:1.4}
+.badge.off{filter:grayscale(1);opacity:.55}
+
+/* ---------- guides ---------- */
+.compose{border:1px solid var(--line);border-radius:var(--radius);padding:13px 14px;background:var(--surface-2)}
+.compose .row{display:flex;gap:10px}
+.compose textarea{
+  flex:1;min-height:56px;resize:vertical;
+  border:1px solid var(--line);border-radius:12px;padding:9px 12px;
+  background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px;
+}
+.compose textarea:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
+.compose .foot{display:flex;align-items:center;gap:8px;margin-top:9px}
+.compose .hint{font-size:11.5px;color:var(--ink-3);flex:1}
+.post{border:1px solid var(--line);border-radius:var(--radius);padding:13px 15px;background:var(--surface)}
+.p-head{display:flex;align-items:center;gap:9px}
+.p-ava{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:16px;background:var(--surface-2);border:1px solid var(--line)}
+.p-who{flex:1;min-width:0}
+.p-who .n{font-size:13px;font-weight:700}
+.p-who .t{font-size:11px;color:var(--ink-3)}
+.p-head .p-ava.me{background:var(--brand);border-color:var(--brand)}
+.post h3{margin:9px 0 0;font-size:14.5px}
+.post .body{margin:4px 0 0;font-size:13px;color:var(--ink-2);white-space:pre-line}
+.post .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.post .acts{display:flex;gap:8px;margin-top:10px}
+.like{font-size:12px;color:var(--ink-2);border:1px solid var(--line);border-radius:99px;padding:3.5px 11px;transition:all .15s}
+.like.on{color:var(--live);border-color:var(--live);background:var(--live-soft)}
+
+/* toast */
+.toast{
+  position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(8px);
+  background:var(--ink);color:var(--bg);
+  font-size:13px;font-weight:500;border-radius:99px;padding:9px 18px;
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;
+  z-index:99;max-width:86vw;text-align:center;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;animation:none !important}
+}
+[hidden]{display:none !important}
+</style>
+
+<div class="page">
+
+  <!-- ============ notes (design rationale, for reviewers) ============ -->
+  <aside class="notes">
+    <span class="eyebrow">附加题 · 产品雏形</span>
+    <h1 class="disp">周末出逃计划</h1>
+    <p class="sub">面向大学生的周末城市探索指南 —— 把分散的展览、市集、演出、徒步，按<b>天气 × 预算 × 同行人数</b>排成一张属于你的周末计划单。</p>
+
+    <div class="pain">
+      <span class="from">活动信息散落在十几个公众号和群聊</span>
+      <span class="to">汇成一处，按<b>匹配度</b>排序，每张卡片讲清「为什么推荐给你」</span>
+    </div>
+    <div class="pain">
+      <span class="from">计划赶不上天气和钱包的变化</span>
+      <span class="to">切换<b>周六（晴）/ 周日（小雨）</b>，列表实时重排：雨天自动倾向室内，超预算会降权并说明原因</span>
+    </div>
+    <div class="pain">
+      <span class="from">一个人总是懒得出门、去了也留不下什么</span>
+      <span class="to"><b>组队出发</b>把「约人」变轻，<b>打卡 + 徽章</b>让每次出发都可积累，<b>攻略</b>让经验流动起来</span>
+    </div>
+
+    <div class="try">
+      <b>▶ 试一试（右侧手机内）：</b>先在顶部把周六切成周日，看推荐如何「避雨」；再调预算到 ¥0–50，观察超预算活动的匹配分与理由变化；然后在任意活动里发起组队或打卡，去底部「打卡」页查看徽章。攻略页可以直接发布你的第一篇。
+      <br><br>本雏形为纯前端示例数据，所有交互真实可用，数据保存在你的浏览器本地。
+    </div>
+    <p class="ver">v0.1 雏形 · 将在 48h 内持续迭代</p>
+  </aside>
+
+  <!-- ============ phone ============ -->
+  <div class="app">
+    <header class="appbar">
+      <span class="logo">🧭</span>
+      <span class="name disp">周末出逃计划</span>
+      <span class="city">📍 你所在的城市</span>
+    </header>
+
+    <main class="screen">
+
+      <!-- ===== tab: recommend ===== -->
+      <section id="tab-rec" role="tabpanel" aria-label="推荐">
+        <div class="h-sec"><span class="t disp">这周末天气</span><span class="c">点击切换，推荐会跟着变</span></div>
+        <div class="weather" id="weather"></div>
+        <p class="wtip" id="wtip"></p>
+
+        <div class="panel">
+          <p class="p-title">我的周末偏好</p>
+          <div class="chips" id="typeChips"></div>
+          <div class="p-row">
+            <span class="lb">预算</span>
+            <div class="seg" id="budgetSeg" style="width:238px"></div>
+          </div>
+          <div class="p-row">
+            <span class="lb">同行人数<small>几个一起</small></span>
+            <div class="stepper">
+              <button data-action="people-minus" aria-label="减少人数">−</button>
+              <span class="val num" id="peopleVal"></span>
+              <button data-action="people-plus" aria-label="增加人数">＋</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-sec" style="margin-top:20px"><span class="t disp">本周推荐</span><span class="c" id="recCount"></span></div>
+        <div class="recs" id="recs"></div>
+      </section>
+
+      <!-- ===== tab: squads ===== -->
+      <section id="tab-team" role="tabpanel" aria-label="组队" hidden>
+        <div class="h-sec"><span class="t disp">出发小队</span><span class="c">在推荐页点「组队」即可发起</span></div>
+        <div class="recs" id="squads" style="margin-top:0"></div>
+      </section>
+
+      <!-- ===== tab: checkin ===== -->
+      <section id="tab-log" role="tabpanel" aria-label="打卡" hidden>
+        <div class="h-sec"><span class="t disp">我的周末</span><span class="c">打卡可积累徽章</span></div>
+        <div class="stats" id="stats"></div>
+        <div class="h-sec" style="margin-top:18px"><span class="t disp">探索足迹</span></div>
+        <div class="tl" id="timeline"></div>
+        <div class="h-sec" style="margin-top:18px"><span class="t disp">徽章墙</span><span class="c" id="badgeCount"></span></div>
+        <div class="badges" id="badges"></div>
+      </section>
+
+      <!-- ===== tab: guides ===== -->
+      <section id="tab-guide" role="tabpanel" aria-label="攻略" hidden>
+        <div class="h-sec"><span class="t disp">同伴攻略</span><span class="c">去过的人留下的实用经验</span></div>
+        <div class="compose">
+          <div class="row">
+            <div class="p-ava me" style="flex:none">🧭</div>
+            <textarea id="composeText" maxlength="200" placeholder="分享一条你的周末经验，比如：环湖徒步建议 9:30 出发，起点才有补给…"></textarea>
+          </div>
+          <div class="foot">
+            <span class="hint" id="composeHint">200 字以内 · 发布后出现在下方</span>
+            <button class="btn pri" data-action="publish">发布攻略</button>
+          </div>
+        </div>
+        <div class="recs" id="posts" style="margin-top:14px"></div>
+      </section>
+
+    </main>
+
+    <nav class="tabbar" aria-label="主导航">
+      <button data-action="tab" data-tab="rec" aria-current="page"><span class="ic">🧭</span>推荐</button>
+      <button data-action="tab" data-tab="team"><span class="ic">🧑‍🤝‍🧑</span>组队</button>
+      <button data-action="tab" data-tab="log"><span class="ic">📍</span>打卡</button>
+      <button data-action="tab" data-tab="guide"><span class="ic">📖</span>攻略</button>
+    </nav>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+"use strict";
+/* ================= data ================= */
+var WEATHER = {
+  sat:{name:"周六", icon:"☀️", label:"晴", temp:"18–26°", kind:"sunny", fit:"适合户外", tip:"本周六晴、微风，是户外活动的好窗口；记得防晒。"},
+  sun:{name:"周日", icon:"🌧️", label:"小雨", temp:"16–21°", kind:"rainy", fit:"优先室内", tip:"周日有小雨，推荐已自动向室内倾斜；出门带伞。"}
+};
+var TYPES = ["展览","市集","演出","徒步","骑行","咖啡"];
+var BUDGETS = [
+  {k:"0-50",  label:"¥0–50"},
+  {k:"50-150",label:"¥50–150"},
+  {k:"150+",  label:"¥150+"},
+  {k:"any",   label:"不限"}
+];
+var ACTS = [
+  {id:"a1", emoji:"🖼️", name:"西岸美术馆 · 新展「流动的形状」", type:"展览", price:30, hours:"2h",  area:"龙华中路", metro:"11号线云锦路站", fit:"in",  group:false, note:"学生证半价 15 元，周五夜场免预约"},
+  {id:"a2", emoji:"🎸", name:"Livehouse「春潮」三城联合演出",     type:"演出", price:120,hours:"3h",  area:"VOOD 门巷", metro:"1号线武林门站",  fit:"in",  group:true,  note:"4 支新生代乐队，站票可蹦"},
+  {id:"a3", emoji:"🥾", name:"云湖公园环湖徒步 8km",              type:"徒步", price:0,  hours:"4h",  area:"近郊",     metro:"2号线云湖公园站",fit:"out", group:true,  note:"平缓环线，湖东段有落日观景点"},
+  {id:"a4", emoji:"🧺", name:"梧桐区周末复古市集",                type:"市集", price:0,  hours:"3h",  area:"梧桐区",   metro:"10号线梧桐路站",  fit:"out", group:false, note:"60+ 摊位，手作/黑胶/古着，14 点最热闹"},
+  {id:"a5", emoji:"🏛️", name:"老城 CityWalk：6 处历史建筑盖章行",  type:"徒步", price:0,  hours:"2.5h",area:"老城南",   metro:"7号线府文站",    fit:"any", group:false, note:"全程 4.2km，邮局有免费纪念戳"},
+  {id:"a6", emoji:"🚲", name:"江边落日骑行 15km",                 type:"骑行", price:30, hours:"2h",  area:"滨江绿道", metro:"共享单车",       fit:"out", group:true,  note:"租车 ¥30/3h，17:30 出发正好赶上日落"},
+  {id:"a7", emoji:"☕", name:"独立书店咖啡地图（3 家连走）",       type:"咖啡", price:60, hours:"2h",  area:"大学路",   metro:"3号线大学路站",  fit:"in",  group:false, note:"凭学生证第二杯半价，可集印花"},
+  {id:"a8", emoji:"🔭", name:"天文馆球幕夜场「宇宙深处」",        type:"展览", price:60, hours:"2.5h",area:"科学城",   metro:"6号线天文馆站",  fit:"in",  group:false, note:"19:00 场人最少，结束后有望远镜观测"},
+  {id:"a9", emoji:"🥏", name:"城市草坪飞盘入门局",                type:"骑行", price:20, hours:"2h",  area:"中央草坪", metro:"4号线草坪站",    fit:"out", group:true,  note:"新手友好，含教学 30 分钟，组队更划算"},
+  {id:"a10",emoji:"🎭", name:"先锋话剧「雾中列车」学生场",        type:"演出", price:49, hours:"2h",  area:"小剧场街", metro:"8号线剧场地站",  fit:"in",  group:false, note:"学生证专享价，演后谈可留 20 分钟"}
+];
+var SEED_SQUADS = [
+  {id:"q1", actId:"a3", day:"周六", time:"09:30", spot:"云湖公园东门（地铁2号线A口）", cap:6, members:["🧗 阿岚","📸 小欧","🎒 北野"]},
+  {id:"q2", actId:"a4", day:"周六", time:"14:00", spot:"梧桐区街心花园喷泉旁",         cap:4, members:["🧢 皮蛋","🍑 桃子"]},
+  {id:"q3", actId:"a2", day:"周六", time:"20:00", spot:"VOOD 门巷正门取票口",          cap:4, members:["🎸 老周","🥁 鼓鼓","🎤 麦麦","🦊 阿栗"]},
+  {id:"q4", actId:"a1", day:"周日", time:"10:30", spot:"西岸美术馆正门遮阳棚下",       cap:5, members:["🐢 慢慢"]}
+];
+var SEED_POSTS = [
+  {id:"p1", ava:"🦊", name:"阿栗",  time:"3 天前", title:"0 元玩一天：老城 CityWalk 完整路线（附盖章点）", body:"路线：老邮局 → 圣心堂 → 巷口咖啡 → 江边步道，全程 4.2km 走走停停 3 小时。\n老邮局的纪念戳记得带本子，圣心堂下午逆光拍照绝了。中午在巷口吃萝卜牛杂，人均 15。", tags:["徒步","0元","盖章"], likes:36},
+  {id:"p2", ava:"🐢", name:"慢慢",  time:"5 天前", title:"雨天备选清单：3 个免费展 + 1 家书店", body:"周日下雨别慌：「流动的形状」学生证半价 15；市立美术馆常设展免费但周一闭馆；设计馆的椅子展很小但出片。\n逛完去大学路书店躲雨，二楼有窗边位可以坐一下午。", tags:["展览","雨天","省钱"], likes:28},
+  {id:"p3", ava:"🐦", name:"小鸥",  time:"1 周前", title:"环湖徒步组队避坑：早 9:30 出发刚刚好", body:"亲测 9:30 东门集合最优：不晒、车位好找、11:30 前能走完东半湖。\n带 1L 水，环湖只有起点有补给；湖东观景台 17 点后逆光，拍照要趁早。", tags:["徒步","组队"], likes:41},
+  {id:"p4", ava:"🍑", name:"桃子",  time:"1 周前", title:"复古市集砍价话术 & 摊位红黑榜", body:"红榜：手作耳环摊（可换耳钩）、黑胶摊老板会试机。黑榜：门口「古着」多为批发电货。\n话术就一句：「两件一起算便宜点？」成功率过半。", tags:["市集","省钱"], likes:19}
+];
+var SEED_CHECKINS = [
+  {actId:"a5", date:"2026-09-05", day:"周六", people:2},
+  {actId:"a7", date:"2026-09-06", day:"周日", people:1}
+];
+
+/* ================= state ================= */
+var KEY = "weekend-escape-v1";
+var state = {
+  prefs:{types:["徒步","市集"], budget:"0-50", people:2, day:"sat"},
+  joined:{}, checkins:[], myPosts:[], likes:{}
+};
+try{
+  var saved = JSON.parse(localStorage.getItem(KEY) || "null");
+  if(saved && saved.prefs){ state = saved; }
+}catch(e){ /* private mode etc. */ }
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+var squads = SEED_SQUADS.map(function(s){ return Object.assign({}, s, {members:s.members.slice()}); });
+
+/* ================= helpers ================= */
+function $(id){ return document.getElementById(id); }
+function actById(id){
+  for(var i=0;i<ACTS.length;i++){ if(ACTS[i].id===id) return ACTS[i]; }
+  return null;
+}
+var toastTimer = null;
+function toast(msg){
+  var t = $("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2200);
+}
+function esc(s){
+  return String(s).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+  });
+}
+function allCheckins(){
+  return state.checkins.concat(SEED_CHECKINS);
+}
+
+/* ================= recommend ================= */
+function fitScore(act, dayKey){
+  var w = WEATHER[dayKey];
+  if(act.fit === "any") return 0;
+  if(w.kind === "sunny") return act.fit === "out" ? 1 : 0;
+  return act.fit === "in" ? 1 : -1;
+}
+function scoreOf(act){
+  var p = state.prefs, w = WEATHER[p.day], s = 40, reasons = [];
+  if(p.types.indexOf(act.type) >= 0){ s += 26; reasons.push("匹配「" + act.type + "」偏好"); }
+  var f = fitScore(act, p.day);
+  if(f === 1){ s += 22; reasons.push(w.kind === "sunny" ? "晴天 · 户外首选" : "有雨 · 室内安心"); }
+  if(f === -1){ s -= 30; reasons.push(w.kind === "sunny" ? "晴天别浪费在室内" : "周日有雨 · 户外不建议"); }
+  if(p.budget !== "any"){
+    var max = p.budget === "0-50" ? 50 : (p.budget === "50-150" ? 150 : 1000);
+    if(act.price <= max){ s += 14; reasons.push(act.price === 0 ? "0 元出发" : "¥" + act.price + " 在预算内"); }
+    else { s -= 30; reasons.push("超预算 ¥" + act.price); }
+  }
+  if(act.group && p.people >= 3){ s += 6; reasons.push("适合小队同行"); }
+  if(!reasons.length){ reasons.push("综合不错的备选"); }
+  return { score: Math.max(6, Math.min(99, s)), reason: reasons.slice(0,2).join(" · ") };
+}
+function squadCountFor(actId){
+  var n = 0;
+  squads.forEach(function(q){ if(q.actId === actId) n += q.members.length; });
+  return n;
+}
+function renderRecs(){
+  var p = state.prefs;
+  var list = ACTS.filter(function(a){ return p.types.length === 0 || p.types.indexOf(a.type) >= 0; });
+  list = list.map(function(a){
+    var r = scoreOf(a);
+    return Object.assign({}, a, r);
+  }).sort(function(x,y){ return y.score - x.score; });
+
+  $("recCount").textContent = list.length ? "按匹配度排序 · " + list.length + " 个" : "";
+  var host = $("recs");
+  if(!list.length){
+    host.innerHTML = "<div class='empty'>这几个类型本周末没有合适的活动<br>试试多勾几个类型 👀</div>";
+    return;
+  }
+  host.innerHTML = list.map(function(a, i){
+    var openQ = squads.some(function(q){ return q.actId === a.id && q.members.length < q.cap; });
+    var joinedThis = squads.some(function(q){ return q.actId === a.id && q.members.indexOf("我") >= 0; });
+    var wtag = a.fit === "out" ? "<span class='tag w-out'>☀️ 需好天</span>"
+             : a.fit === "in"  ? "<span class='tag w-in'>☔ 室内</span>"
+             : "<span class='tag'>🌤 晴雨皆宜</span>";
+    var teamN = squadCountFor(a.id);
+    return "<article class='card" + (i === 0 ? " first" : "") + "'>" +
+      (i === 0 ? "<span class='topflag'>本周最匹配</span>" : "") +
+      "<div class='c-top'>" +
+        "<span class='c-emoji'>" + a.emoji + "</span>" +
+        "<div class='c-main'>" +
+          "<div class='c-title'><h3>" + esc(a.name) + "</h3><span class='score num'>" + a.score + " 匹配</span></div>" +
+          "<p class='c-meta num'>¥" + a.price + (a.price === 0 ? "（免费）" : "") + " · " + a.hours + " · " + esc(a.area) + " · " + esc(a.metro) + "</p>" +
+          "<p class='c-reason'>" + a.reason + "</p>" +
+        "</div>" +
+      "</div>" +
+      "<div class='c-foot'>" +
+        wtag +
+        "<span class='tag'>" + a.type + "</span>" +
+        (teamN ? "<span class='tag'>🧑‍🤝‍🧑 " + teamN + " 人在约</span>" : "") +
+        "<span class='sp'></span>" +
+        "<button class='btn" + (joinedThis ? " on" : "") + "' data-action='act-join' data-id='" + a.id + "'>" + (joinedThis ? "✓ 已在小队" : (openQ ? "加入小队" : "发起组队")) + "</button>" +
+        "<button class='btn pri' data-action='act-check' data-id='" + a.id + "'>📍 打卡</button>" +
+      "</div>" +
+    "</article>";
+  }).join("");
+}
+function renderWeather(){
+  var host = $("weather");
+  host.innerHTML = ["sat","sun"].map(function(k){
+    var w = WEATHER[k];
+    return "<button class='wcard' data-action='day' data-day='" + k + "' aria-pressed='" + (state.prefs.day === k) + "'>" +
+      "<span class='we'>" + w.icon + "</span>" +
+      "<span class='wd'>" + w.name + " · " + w.label + "</span>" +
+      "<span class='wt num'>" + w.temp + "</span>" +
+      "<span class='wf'>" + w.fit + "</span>" +
+    "</button>";
+  }).join("");
+  $("wtip").innerHTML = "<span class='dot'></span><span>" + WEATHER[state.prefs.day].tip + "</span>";
+}
+function renderPrefs(){
+  $("typeChips").innerHTML = TYPES.map(function(t){
+    return "<button class='chip' data-action='type' data-type='" + t + "' aria-pressed='" + (state.prefs.types.indexOf(t) >= 0) + "'>" + t + "</button>";
+  }).join("");
+  $("budgetSeg").innerHTML = BUDGETS.map(function(b){
+    return "<button data-action='budget' data-b='" + b.k + "' aria-pressed='" + (state.prefs.budget === b.k) + "'>" + b.label + "</button>";
+  }).join("");
+  $("peopleVal").textContent = state.prefs.people + " 人";
+}
+
+/* ================= squads ================= */
+function renderSquads(){
+  var host = $("squads");
+  if(!squads.length){
+    host.innerHTML = "<div class='empty'>还没有小队<br>去「推荐」页挑一个活动，点「发起组队」🧑‍🤝‍🧑</div>";
+    return;
+  }
+  host.innerHTML = squads.map(function(q){
+    var a = actById(q.actId);
+    var n = q.members.length, mine = q.members.indexOf("我") >= 0, full = n >= q.cap;
+    var memHtml = q.members.slice(0,5).map(function(m){
+      var emoji = m === "我" ? "🙂" : m.split(" ")[0];
+      return "<span class='mem" + (m === "我" ? " me" : "") + "' title='" + esc(m) + "'>" + emoji + "</span>";
+    }).join("");
+    if(n > 5){ memHtml += "<span class='mem more num'>+" + (n-5) + "</span>"; }
+    return "<article class='squad" + (full && !mine ? " full" : "") + "'>" +
+      "<div class='s-head'>" +
+        "<span class='se'>" + a.emoji + "</span>" +
+        "<h3>" + esc(a.name) + "</h3>" +
+        "<span class='s-pill " + (full ? "full" : "open") + "'>" + (full ? "已满员" : "招募中") + "</span>" +
+      "</div>" +
+      "<div class='s-meta num'>" +
+        "<span class='m'>" + q.day + " " + q.time + " 集合</span>" +
+        "<span class='m'>" + esc(q.spot) + "</span>" +
+        "<span class='m'>人均约 ¥" + a.price + (a.price === 0 ? "（免费）" : "") + "</span>" +
+      "</div>" +
+      "<div class='mems'>" + memHtml + "</div>" +
+      "<div class='s-bar'><i style='width:" + Math.round(n / q.cap * 100) + "%'></i></div>" +
+      "<div class='s-foot'>" +
+        "<span class='cnt num'>" + n + " / " + q.cap + " 人</span>" +
+        "<span class='sp'></span>" +
+        (mine
+          ? "<button class='btn' data-action='quit' data-id='" + q.id + "'>退出小队</button>"
+          : (full
+              ? "<button class='btn' disabled style='opacity:.5;cursor:not-allowed'>已满员</button>"
+              : "<button class='btn pri' data-action='join' data-id='" + q.id + "'>加入小队</button>")) +
+      "</div>" +
+    "</article>";
+  }).join("");
+}
+function joinAct(actId){
+  var existing = null;
+  squads.forEach(function(q){
+    if(q.actId === actId && q.members.length < q.cap && q.members.indexOf("我") < 0 && !existing) existing = q;
+  });
+  var mineAlready = squads.some(function(q){ return q.actId === actId && q.members.indexOf("我") >= 0; });
+  if(mineAlready){ toast("你已在这个活动的小队里啦"); return; }
+  if(existing){
+    existing.members.push("我");
+    toast("已加入「" + actById(actId).name + "」小队，去组队页看集合信息");
+  }else{
+    var a = actById(actId);
+    squads.push({ id:"my" + Date.now(), actId:actId, day:WEATHER[state.prefs.day].name, time:"10:00", spot:a.metro + " 站内服务台", cap:6, members:["我"] });
+    toast("已发起组队 · " + WEATHER[state.prefs.day].name + " 10:00 " + a.metro + " 集合");
+  }
+  save(); renderRecs(); renderSquads();
+}
+
+/* ================= checkin ================= */
+function renderCheckins(){
+  var all = allCheckins().slice().sort(function(x,y){ return x.date < y.date ? 1 : -1; });
+  var typesDone = {};
+  all.forEach(function(c){ var a = actById(c.actId); if(a) typesDone[a.type] = true; });
+  var typeN = Object.keys(typesDone).length;
+  $("stats").innerHTML =
+    "<div class='stat'><div class='v num disp'>" + all.length + "</div><div class='k'>累计打卡</div></div>" +
+    "<div class='stat'><div class='v num disp'>" + typeN + "<small> / 6</small></div><div class='k'>活动类型</div></div>" +
+    "<div class='stat'><div class='v num disp' id='badgeN'></div><div class='k'>已得徽章</div></div>";
+  $("timeline").innerHTML = all.length ? all.map(function(c){
+    var a = actById(c.actId);
+    return "<div class='tl-item'>" +
+      "<span class='tl-dot'>" + (a ? a.emoji : "📍") + "</span>" +
+      "<div class='tl-body'><div class='n'>" + (a ? esc(a.name) : "一次探索") + "</div>" +
+      "<div class='d num'>" + c.date + " · " + c.day + " · " + c.people + " 人同行</div></div>" +
+    "</div>";
+  }).join("") : "<div class='empty'>还没有足迹<br>去「推荐」页完成第一次打卡吧 📍</div>";
+
+  var rainy = all.some(function(c){ return c.day === "周日"; });
+  var unlocked = {
+    b1: all.length >= 1,
+    b2: all.length >= 3,
+    b3: rainy,
+    b4: squads.some(function(q){ return q.members.indexOf("我") >= 0; }),
+    b5: state.myPosts.length > 0
+  };
+  var badges = [
+    {i:"🎒", n:"首次出发", c:"打卡 1 次",   ok:unlocked.b1},
+    {i:"🥾", n:"探索三连", c:"打卡 3 次",   ok:unlocked.b2},
+    {i:"☔", n:"风雨无阻", c:"雨天也出发",  ok:unlocked.b3},
+    {i:"🧑‍🤝‍🧑",n:"组队出发", c:"加入一支小队",ok:unlocked.b4},
+    {i:"✍️", n:"攻略作者", c:"发布 1 篇攻略",ok:unlocked.b5}
+  ];
+  var got = badges.filter(function(b){ return b.ok; }).length;
+  var bn = $("badgeN"); if(bn) bn.textContent = got + " / 5";
+  $("badgeCount").textContent = got + " / 5";
+  $("badges").innerHTML = badges.map(function(b){
+    return "<div class='badge" + (b.ok ? "" : " off") + "' title='" + (b.ok ? "已解锁" : "未解锁") + "'>" +
+      "<div class='bi'>" + b.i + "</div><div class='bn'>" + b.n + "</div><div class='bc'>" + b.c + "</div>" +
+    "</div>";
+  }).join("");
+}
+function checkin(actId){
+  var a = actById(actId);
+  var d = new Date();
+  var date = d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+  state.checkins.push({ actId:actId, date:date, day:WEATHER[state.prefs.day].name, people:state.prefs.people });
+  save(); renderCheckins();
+  toast("已打卡「" + a.name + "」📍 去打卡页看足迹和徽章");
+}
+
+/* ================= guides ================= */
+function renderPosts(){
+  var posts = state.myPosts.concat(SEED_POSTS);
+  $("posts").innerHTML = posts.map(function(p){
+    var liked = !!state.likes[p.id];
+    var n = p.likes + (liked ? 1 : 0);
+    return "<article class='post'>" +
+      "<div class='p-head'>" +
+        "<span class='p-ava" + (p.me ? " me" : "") + "'>" + p.ava + "</span>" +
+        "<span class='p-who'><span class='n'>" + esc(p.name) + (p.me ? "（我）" : "") + "</span><br><span class='t'>" + esc(p.time) + "</span></span>" +
+      "</div>" +
+      "<h3>" + esc(p.title) + "</h3>" +
+      "<p class='body'>" + esc(p.body) + "</p>" +
+      "<div class='tags'>" + p.tags.map(function(t){ return "<span class='tag'>#" + esc(t) + "</span>"; }).join("") + "</div>" +
+      "<div class='acts'>" +
+        "<button class='like" + (liked ? " on" : "") + "' data-action='like' data-id='" + p.id + "'>👍 有用 <span class='num'>" + n + "</span></button>" +
+      "</div>" +
+    "</article>";
+  }).join("");
+}
+function publish(){
+  var ta = $("composeText");
+  var text = ta.value.trim();
+  if(!text){ toast("先写点什么再发布吧"); return; }
+  var id = "mine" + Date.now();
+  state.myPosts.unshift({ id:id, ava:"🧭", name:"我", time:"刚刚", title:"我的周末经验", body:text, tags:["同伴分享"], me:true, likes:0 });
+  ta.value = "";
+  save(); renderPosts(); renderCheckins();
+  toast("已发布 🎉 攻略作者徽章 +1");
+}
+
+/* ================= tabs & events ================= */
+var TAB_MAP = { rec:"tab-rec", team:"tab-team", log:"tab-log", guide:"tab-guide" };
+function switchTab(name){
+  Object.keys(TAB_MAP).forEach(function(k){ $(TAB_MAP[k]).hidden = (k !== name); });
+  document.querySelectorAll(".tabbar button").forEach(function(b){
+    if(b.dataset.tab === name){ b.setAttribute("aria-current","page"); } else { b.removeAttribute("aria-current"); }
+  });
+  window.scrollTo({ top:0, behavior:"smooth" });
+}
+document.addEventListener("click", function(ev){
+  var el = ev.target.closest("[data-action]");
+  if(!el) return;
+  var act = el.dataset.action;
+  if(act === "tab"){ switchTab(el.dataset.tab); }
+  else if(act === "day"){
+    state.prefs.day = el.dataset.day; save(); renderWeather(); renderRecs();
+  }
+  else if(act === "type"){
+    var t = el.dataset.type, i = state.prefs.types.indexOf(t);
+    if(i >= 0){ state.prefs.types.splice(i,1); } else { state.prefs.types.push(t); }
+    save(); renderPrefs(); renderRecs();
+  }
+  else if(act === "budget"){ state.prefs.budget = el.dataset.b; save(); renderPrefs(); renderRecs(); }
+  else if(act === "people-minus"){ if(state.prefs.people > 1){ state.prefs.people--; save(); renderPrefs(); renderRecs(); } }
+  else if(act === "people-plus"){ if(state.prefs.people < 9){ state.prefs.people++; save(); renderPrefs(); renderRecs(); } }
+  else if(act === "act-join"){ joinAct(el.dataset.id); }
+  else if(act === "act-check"){ checkin(el.dataset.id); }
+  else if(act === "join"){
+    squads.forEach(function(q){
+      if(q.id === el.dataset.id && q.members.length < q.cap && q.members.indexOf("我") < 0) q.members.push("我");
+    });
+    save(); renderSquads(); renderRecs(); renderCheckins();
+    toast("已加入小队 🧑‍🤝‍🧑 集合信息见卡片");
+  }
+  else if(act === "quit"){
+    squads.forEach(function(q){
+      if(q.id === el.dataset.id){
+        var i = q.members.indexOf("我");
+        if(i >= 0) q.members.splice(i,1);
+        if(q.id.indexOf("my") === 0 && q.members.length === 0){
+          squads = squads.filter(function(x){ return x.id !== q.id; });
+        }
+      }
+    });
+    save(); renderSquads(); renderRecs(); renderCheckins();
+    toast("已退出小队");
+  }
+  else if(act === "like"){
+    var pid = el.dataset.id;
+    state.likes[pid] = !state.likes[pid];
+    save(); renderPosts();
+  }
+  else if(act === "publish"){ publish(); }
+});
+
+/* ================= boot ================= */
+renderWeather(); renderPrefs(); renderRecs(); renderSquads(); renderCheckins(); renderPosts();
+</script>
